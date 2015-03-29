@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = PusherHackathon::VERSION
   spec.authors       = ["Jamie Patel"]
   spec.email         = ["jamie@notespublication.com"]
-  spec.summary       = %q{Yolo}
-  spec.description   = %q{w00t}
+  spec.summary       = %q{Pusher hackathon tool}
+  spec.description   = %q{A gem that starts up a server that authenticates your Pusher private- and presence-channelss}
   spec.homepage      = ""
   spec.license       = "MIT"
 

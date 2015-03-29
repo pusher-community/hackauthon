@@ -6,7 +6,7 @@ require 'json'
 module PusherHackathon
 	class AuthApp  < Sinatra::Base
 
-		post '/pusher/auth' do 
+		post '/pusher/auth' do
 			response['Access-Control-Allow-Origin'] = '*'
 
 			Pusher.app_id = settings.app_id
