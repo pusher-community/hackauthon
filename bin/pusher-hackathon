@@ -21,11 +21,12 @@ command :run do |c|
   	if !(options.key && options.secret && options.id) 
   		puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
   	else
-	  	PusherHackathon::AuthApp.set :app_id, options.id
-	  	PusherHackathon::AuthApp.set :app_key, options.key
-	  	PusherHackathon::AuthApp.set :app_secret, options.secret
-	  	PusherHackathon::AuthApp.set :port, options.port.to_i || 9090
 
+			Pusher.app_id = options.id
+			Pusher.key = options.key
+			Pusher.secret = options.secret
+
+	  	PusherHackathon::AuthApp.set :port, options.port.to_i || 9090
 	    PusherHackathon::AuthApp.run!
 	end
 

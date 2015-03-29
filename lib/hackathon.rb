@@ -8,10 +8,6 @@ module PusherHackathon
 
 		post '/pusher/auth' do
 			response['Access-Control-Allow-Origin'] = '*'
-
-			Pusher.app_id = settings.app_id
-			Pusher.key = settings.app_key
-			Pusher.secret = settings.app_secret
 			
 			Pusher[params[:channel_name]].authenticate(params[:socket_id], {
 				user_id: params[:user_id],
