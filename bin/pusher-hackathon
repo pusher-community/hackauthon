@@ -15,7 +15,7 @@ command :run do |c|
 	c.option '--key STRING', String, 'Your Pusher App Key'
 	c.option '--secret STRING',String, 'Your Pusher App Secret'
 	c.option '--id STRING', String,'Your Pusher App Id'
-	c.option '--port NUMBER', String, '[optional] The port you wish to run the endpoint on'
+	c.option '--port STRING', String, '[optional] The port you wish to run the endpoint on'
 	c.action do |args, options|
 
 		if !(options.key && options.secret && options.id) 
@@ -26,7 +26,9 @@ command :run do |c|
 			Pusher.key = options.key
 			Pusher.secret = options.secret
 
-			PusherHackathon::AuthApp.set :port, (!options.port.to_i.zero?) || 9090
+			port = (options.port) ? options.port.to_i : 9090
+
+			PusherHackathon::AuthApp.set :port, port
 			PusherHackathon::AuthApp.run!
 		end
 	end
