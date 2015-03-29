@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'commander/import'
+require_relative '../lib/hackathon'
+
+program :version, '0.0.1'
+program :description, 'A command-line tool to set up Pusher private- and presence-channel authentication for hackathons.'
+
+command :run do |c|
+  c.syntax = 'pusher-hackathon run [options]'
+  c.summary = 'Run your authentication endpoint on localhost'
+  c.description = ''
+  c.example 'description', 'pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret'
+  c.option '--key STRING', String, 'Your Pusher App Key'
+  c.option '--secret STRING',String, 'Your Pusher App Secret'
+  c.option '--id STRING', String,'Your Pusher App Id'
+  c.option '--port NUMBER', String, '[optional] The port you wish to run the endpoint on'
+  c.action do |args, options|
+
+  	if !(options.key && options.secret && options.id) 
+  		puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
+  	else
+	  	PusherHackathon::AuthApp.set :app_id, options.id
+	  	PusherHackathon::AuthApp.set :app_key, options.key
+	  	PusherHackathon::AuthApp.set :app_secret, options.secret
+	  	PusherHackathon::AuthApp.set :port, options.port.to_i || 9090
+
+	    PusherHackathon::AuthApp.run!
+	end
+
+  end
+end
