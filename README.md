@@ -10,10 +10,10 @@ Setting up a server that authenticates private- and presence-channels for hackat
 
 Simply run the `pusher-hackathon` command, with your app's `id`, `key`, and `secret` as options. If you wish, you can choose to specify a `port`.
 
-    $ pusher-hackathon --id your_app_id \
-                       --secret your_app_secret \ 
-                       --key your_app_key \
-                       [--port your_port]
+    $ pusher-hackathon run --id your_app_id \
+                           --secret your_app_secret \ 
+                           --key your_app_key \
+                           [--port your_port]
 
 This will set up a Sinatra server for you. The default port it will be running on is `9090`.
 
