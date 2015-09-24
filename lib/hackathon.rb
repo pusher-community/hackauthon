@@ -10,8 +10,8 @@ module PusherHackathon
 			response['Access-Control-Allow-Origin'] = '*'
 			
 			Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-				user_id: params[:user_id],
-			  	user_info: JSON.parse(params[:user_info])
+				user_id: params[:user_id] || 1,
+			  	user_info: JSON.parse(params[:user_info] || {twitter: 'pusher'}.to_json)
 		  	}).to_json
 		end
 	end
