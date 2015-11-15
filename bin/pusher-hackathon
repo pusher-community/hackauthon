@@ -18,8 +18,7 @@ command :run do |c|
 	c.option '--port STRING', String, '[optional] The port you wish to run the endpoint on'
 	c.option '--url STRING', String, 'Your Pusher URL'
 	c.action do |args, options|
-
-		if !(options.key && options.secret && options.id) || !options.url
+		unless options.url || (options.key && options.secret && options.id)
 			puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
 		else
 			Pusher.url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.app_id}"
