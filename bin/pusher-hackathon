@@ -16,18 +16,14 @@ command :run do |c|
 	c.option '--secret STRING',String, 'Your Pusher App Secret'
 	c.option '--id STRING', String,'Your Pusher App Id'
 	c.option '--port STRING', String, '[optional] The port you wish to run the endpoint on'
+	c.option '--url STRING', String, 'Your Pusher URL'
 	c.action do |args, options|
 
-		if !(options.key && options.secret && options.id) 
+		if !(options.key && options.secret && options.id) || !options.url
 			puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
 		else
-
-			Pusher.app_id = options.id
-			Pusher.key = options.key
-			Pusher.secret = options.secret
-
+			Pusher.url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.app_id}"
 			port = (options.port) ? options.port.to_i : 9090
-
 			PusherHackathon::AuthApp.set :port, port
 			PusherHackathon::AuthApp.run!
 		end
