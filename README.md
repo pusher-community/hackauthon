@@ -12,6 +12,10 @@ Setting up a server that authenticates private- and presence-channels for hackat
                            --secret your_app_secret \ 
                            --key your_app_key
 
+Or, to save moar time:
+
+    $ pusher-hackathon deploy --url your_pusher_url
+
 This will open up a Heroku dashboard. Click "Deploy for free" and in 20 seconds you'll have your own authentication app.
 
 Boom, job done! Now get hacking!
