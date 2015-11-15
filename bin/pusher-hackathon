@@ -7,16 +7,22 @@ require_relative '../lib/hackathon'
 program :version, PusherHackathon::VERSION
 program :description, 'A command-line tool to set up Pusher private- and presence-channel authentication for hackathons.'
 
-command :run do |c|
-	c.syntax = 'pusher-hackathon run [options]'
-	c.summary = 'Run your authentication endpoint on localhost'
-	c.description = ''
-	c.example 'description', 'pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret'
+def parse_opts(c)
 	c.option '--key STRING', String, 'Your Pusher App Key'
 	c.option '--secret STRING',String, 'Your Pusher App Secret'
 	c.option '--id STRING', String,'Your Pusher App Id'
 	c.option '--port STRING', String, '[optional] The port you wish to run the endpoint on'
 	c.option '--url STRING', String, 'Your Pusher URL'
+end
+
+command :run do |c|
+	c.syntax = 'pusher-hackathon run [options]'
+	c.summary = 'Run your authentication endpoint on localhost'
+	c.description = ''
+	c.example 'description', 'pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret'
+
+	parse_opts(c)
+
 	c.action do |args, options|
 		unless options.url || (options.key && options.secret && options.id)
 			puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
@@ -25,6 +31,26 @@ command :run do |c|
 			port = (options.port) ? options.port.to_i : 9090
 			PusherHackathon::AuthApp.set :port, port
 			PusherHackathon::AuthApp.run!
+		end
+	end
+end
+
+command :deploy do |c|
+	c.syntax = 'pusher-hackathon deploy [options]'
+	c.summary = 'Run your authentication endpoint on heroku'
+	c.description = ''
+	c.example 'description', 'pusher-hackathon deploy --url your_pusher_url'
+
+	parse_opts(c)
+
+	c.action do |args, options|
+		unless options.url || (options.key && options.secret && options.id)
+			puts "Type: `pusher-hackathon deploy --id your_app_id --key your_app_key --secret your_app_secret`"
+		else
+			require 'uri'
+			url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.app_id}"
+			url = URI.encode(url, /\W/)
+			`open 'https://heroku.com/deploy?template=https://github.com/jpatel531/pusher-auth&env[PUSHER_URL]=#{url}'`
 		end
 	end
 end
