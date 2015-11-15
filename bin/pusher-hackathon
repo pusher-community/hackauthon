@@ -27,7 +27,7 @@ command :run do |c|
 		unless options.url || (options.key && options.secret && options.id)
 			puts "Type: `pusher-hackathon run --id your_app_id --key your_app_key --secret your_app_secret`"
 		else
-			Pusher.url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.app_id}"
+			Pusher.url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.id}"
 			port = (options.port) ? options.port.to_i : 9090
 			PusherHackathon::AuthApp.set :port, port
 			PusherHackathon::AuthApp.run!
@@ -48,7 +48,7 @@ command :deploy do |c|
 			puts "Type: `pusher-hackathon deploy --id your_app_id --key your_app_key --secret your_app_secret`"
 		else
 			require 'uri'
-			url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.app_id}"
+			url = options.url || "https://#{options.key}:#{options.secret}@api.pusherapp.com/apps/#{options.id}"
 			url = URI.encode(url, /\W/)
 			`open 'https://heroku.com/deploy?template=https://github.com/jpatel531/pusher-auth&env[PUSHER_URL]=#{url}'`
 		end
